@@ -32,26 +32,38 @@ namespace TextEditor
 
     static void Abrir()
     {
+      Console.Clear();
+      Console.WriteLine("Qual o caminho do arquivo?");
+      string caminho = Console.ReadLine();
 
+      using (var arquivo = new StreamReader(caminho))
+      {
+        string texto = arquivo.ReadToEnd();
+        Console.WriteLine(texto);
+      }
+
+      Console.WriteLine("");
+      Console.ReadLine();
+      Menu();
     }
 
     static void Editar()
     {
       Console.Clear();
       Console.WriteLine("Digite seu texto abaixo: (ESC para sair)");
-      string text = "";
+      string texto = "";
 
       do
       {
-        text += Console.ReadLine();
-        text += Environment.NewLine;
+        texto += Console.ReadLine();
+        texto += Environment.NewLine;
       }
       while (Console.ReadKey().Key != ConsoleKey.Escape);
 
-      Salvar(text);
+      Salvar(texto);
     }
 
-    static void Salvar(string text)
+    static void Salvar(string texto)
     {
       Console.Clear();
       Console.WriteLine("Qual o caminho para salvar o arquivo? ");
@@ -59,7 +71,7 @@ namespace TextEditor
 
       using (var arquivo = new StreamWriter(caminho))
       {
-        arquivo.Write(text);
+        arquivo.Write(texto);
       }
 
       Console.WriteLine($"Arquivo salvo com sucesso no caminho: {caminho}");
